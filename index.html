@@ -1,13 +1,62 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" media="screen">
+    <script>
+        testFun = function () {
+            console.log('HTML loaded successfully');
+            checkStorageAccess();
+        }
 
-  <title>AR hosting test</title>
+        checkStorageAccess = function () {
+            if (document.hasStorageAccess()) {
+                document.hasStorageAccess().then(hasAccess => {
+                    if (hasAccess) {
+                        console.log("document.hasStorageAccess")
+                    } else {
+                        return document.requestStorageAccess()
+                    }
+                }).then(_ => {
+                    // example from MDN
+                    console.log("3rd party: document.cookie=", document.cookie)
+                    document.cookie = "foo=bar";              // set a cookie
+                    const key = "KEY";
+                    console.log("window.localStorage[KEY]=", window.localStorage[key])
 
+                    console.log("document=", document)
+                    console.log("window=", window)
+                    console.log("window.parent=", window.parent)
+                    console.log("window.parent.document=", window.parent.document)
+
+                }).catch(reason => {
+                    console.log("Some promise have failed, reason=", reason)
+                })
+            }
+        }
+
+        requestStorageAccess = function () {
+            var promise = document.requestStorageAccess();
+            promise.then(
+                function () {
+                    console.log('storage access granted');
+                },
+                function () {
+                    console.log('storage access declined');
+                }
+            );
+        }</script>
 </head>
 
-<body>
-  <div>test body</div>
+<body onload="testFun()">
+    <iframe src="https://ny.matrix.ms.com/eqr/research/webapp/static/bot/index.html" style="height: 600px;width: 400px;"
+        sandbox="allow-storage-access-by-user-activation
+    allow-scripts
+    allow-same-origin"></iframe>
 </body>
+
+</html>
