@@ -19,7 +19,7 @@
                     if (hasAccess) {
                         console.log("document.hasStorageAccess")
                     } else {
-                        return document.requestStorageAccess()
+                        // return document.requestStorageAccess()
                     }
                 }).then(_ => {
                     // example from MDN
@@ -53,8 +53,9 @@
 </head>
 
 <body onload="testFun()">
-    <iframe src="https://ny.matrix-uat.ms.com/eqr/research/webapp/static/bot/index.html" style="height: 600px;width: 400px;"
-        sandbox="allow-storage-access-by-user-activation
+    <button onclick="requestStorageAccess()"> Get Storage Access</button>
+    <iframe src="https://ny.matrix-uat.ms.com/eqr/research/webapp/static/bot/index.html"
+        style="height: 600px;width: 400px;" sandbox="allow-storage-access-by-user-activation
     allow-scripts
     allow-same-origin"></iframe>
 </body>
